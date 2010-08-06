@@ -1,0 +1,614 @@
+<!--
+ * Copyright (C) 2009 The Android Open Source Project
+ *
+ * Licensed under the Apache License, version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+--> 
+<sdk:sdk-repository 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:sdk="http://schemas.android.com/sdk/android/repository/2"> 
+ 
+    <sdk:add-on> 
+        <sdk:name>Google APIs</sdk:name> 
+        <sdk:api-level>3</sdk:api-level> 
+        <sdk:vendor>Google Inc.</sdk:vendor> 
+        <sdk:revision>03</sdk:revision> 
+        <sdk:description>Android + Google APIs</sdk:description> 
+        <sdk:desc-url>http://developer.android.com/</sdk:desc-url> 
+        <sdk:uses-license ref="android-sdk-license" /> 
+        <sdk:archives> 
+            <sdk:archive os="any"> 
+                <sdk:size>34908058</sdk:size> 
+                <sdk:checksum type="sha1">1f92abf3a76be66ae8032257fc7620acbd2b2e3a</sdk:checksum> 
+                <sdk:url>google_apis-3-r03.zip</sdk:url> 
+            </sdk:archive> 
+        </sdk:archives> 
+        <sdk:libs> 
+            <sdk:lib> 
+                <sdk:name>com.google.android.maps</sdk:name> 
+                <sdk:description>API for Google Maps.</sdk:description> 
+            </sdk:lib> 
+        </sdk:libs> 
+    </sdk:add-on> 
+ 
+    <sdk:platform> 
+        <sdk:version>1.1</sdk:version> 
+        <sdk:api-level>2</sdk:api-level> 
+        <sdk:revision>1</sdk:revision> 
+        <sdk:description>Android SDK Platform 1.1_r1</sdk:description> 
+        <sdk:desc-url>http://developer.android.com/sdk/android-1.1.html</sdk:desc-url> 
+        <sdk:obsolete /> 
+        <sdk:archives> 
+            <sdk:archive os="windows" arch="any"> 
+                <sdk:size>46828615</sdk:size> 
+                <sdk:checksum type="sha1">a4060f29ed39fc929c302836d488998c53c3002e</sdk:checksum> 
+                <sdk:url>android-1.1_r1-windows.zip</sdk:url> 
+            </sdk:archive> 
+            <sdk:archive os="macosx" arch="any"> 
+                <sdk:size>45584305</sdk:size> 
+                <sdk:checksum type="sha1">e21dbcff45b7356657449ebb3c7e941be2bb5ebe</sdk:checksum> 
+                <sdk:url>android-1.1_r1-macosx.zip</sdk:url> 
+            </sdk:archive> 
+            <sdk:archive os="linux" arch="any"> 
+                <sdk:size>45476658</sdk:size> 
+                <sdk:checksum type="sha1">c054d25c9b4c6251fa49c2f9c54336998679d3fe</sdk:checksum> 
+                <sdk:url>android-1.1_r1-linux.zip</sdk:url> 
+            </sdk:archive> 
+        </sdk:archives>    
+    </sdk:platform> 
+ 
+    <sdk:license type="text" id="android-sdk-license"> 
+This is the Android Software Development Kit License Agreement.
+ 
+1. Introduction
+ 
+1.1 The Android Software Development Kit (referred to in this License Agreement as the "SDK" and specifically including the Android system files, packaged APIs, and Google APIs add-ons) is licensed to you subject to the terms of this License Agreement. This License Agreement forms a legally binding contract between you and Google in relation to your use of the SDK.
+ 
+1.2 "Google" means Google Inc., a Delaware corporation with principal place of business at 1600 Amphitheatre Parkway, Mountain View, CA 94043, United States.
+ 
+2. Accepting this License Agreement
+ 
+2.1 In order to use the SDK, you must first agree to this License Agreement. You may not use the SDK if you do not accept this License Agreement.
+ 
+2.2 You can accept this License Agreement by:
+ 
+(A) clicking to accept or agree to this License Agreement, where this option is made available to you; or
+ 
+(B) by actually using the SDK. In this case, you agree that use of the SDK constitutes acceptance of the Licensing Agreement from that point onwards.
+ 
+2.3 You may not use the SDK and may not accept the Licensing Agreement if you are a person barred from receiving the SDK under the laws of the United States or other countries including the country in which you are resident or from which you use the SDK.
+ 
+2.4 If you are agreeing to be bound by this License Agreement on behalf of your employer or other entity, you represent and warrant that you have full legal authority to bind your employer or such entity to this License Agreement. If you do not have the requisite authority, you may not accept the Licensing Agreement or use the SDK on behalf of your employer or other entity.
+ 
+3. SDK License from Google
+ 
+3.1 Subject to the terms of this License Agreement, Google grants you a limited, worldwide, royalty-free, non- assignable and non-exclusive license to use the SDK solely to develop applications to run on the Android platform.
+ 
+3.2 You agree that Google or third parties own all legal right, title and interest in and to the SDK, including any Intellectual Property Rights that subsist in the SDK. "Intellectual Property Rights" means any and all rights under patent law, copyright law, trade secret law, trademark law, and any and all other proprietary rights. Google reserves all rights not expressly granted to you.
+ 
+3.3 Except to the extent required by applicable third party licenses, you may not copy (except for backup purposes), modify, adapt, redistribute, decompile, reverse engineer, disassemble, or create derivative works of the SDK or any part of the SDK. Except to the extent required by applicable third party licenses, you may not load any part of the SDK onto a mobile handset or any other hardware device except a personal computer, combine any part of the SDK with other software, or distribute any software or device incorporating a part of the SDK.
+ 
+3.4 Use, reproduction and distribution of components of the SDK licensed under an open source software license are governed solely by the terms of that open source software license and not this License Agreement.
+ 
+3.5 You agree that the form and nature of the SDK that Google provides may change without prior notice to you and that future versions of the SDK may be incompatible with applications developed on previous versions of the SDK. You agree that Google may stop (permanently or temporarily) providing the SDK (or any features within the SDK) to you or to users generally at Google's sole discretion, without prior notice to you.
+ 
+3.6 Nothing in this License Agreement gives you a right to use any of Google's trade names, trademarks, service marks, logos, domain names, or other distinctive brand features.
+ 
+3.7 You agree that you will not remove, obscure, or alter any proprietary rights notices (including copyright and trademark notices) that may be affixed to or contained within the SDK.
+ 
+4. Use of the SDK by You
+ 
+4.1 Google agrees that it obtains no right, title or interest from you (or your licensors) under this License Agreement in or to any software applications that you develop using the SDK, including any intellectual property rights that subsist in those applications.
+ 
+4.2 You agree to use the SDK and write applications only for purposes that are permitted by (a) this License Agreement and (b) any applicable law, regulation or generally accepted practices or guidelines in the relevant jurisdictions (including any laws regarding the export of data or software to and from the United States or other relevant countries).
+ 
+4.3 You agree that if you use the SDK to develop applications for general public users, you will protect the privacy and legal rights of those users. If the users provide you with user names, passwords, or other login information or personal information, your must make the users aware that the information will be available to your application, and you must provide legally adequate privacy notice and protection for those users. If your application stores personal or sensitive information provided by users, it must do so securely. If the user provides your application with Google Account information, your application may only use that information to access the user's Google Account when, and for the limited purposes for which, the user has given you permission to do so.
+ 
+4.4 You agree that you will not engage in any activity with the SDK, including the development or distribution of an application, that interferes with, disrupts, damages, or accesses in an unauthorized manner the servers, networks, or other properties or services of any third party including, but not limited to, Google or any mobile communications carrier.
+ 
+4.5 You agree that you are solely responsible for (and that Google has no responsibility to you or to any third party for) any data, content, or resources that you create, transmit or display through the Android platform and/or applications for the Android platform, and for the consequences of your actions (including any loss or damage which Google may suffer) by doing so.
+ 
+4.6 You agree that you are solely responsible for (and that Google has no responsibility to you or to any third party for) any breach of your obligations under this License Agreement, any applicable third party contract or Terms of Service, or any applicable law or regulation, and for the consequences (including any loss or damage which Google or any third party may suffer) of any such breach.
+ 
+5. Your Developer Credentials
+ 
+5.1 You agree that you are responsible for maintaining the confidentiality of any developer credentials that may be issued to you by Google or which you may choose yourself and that you will be solely responsible for all applications that are developed under your developer credentials.
+ 
+6. Privacy and Information
+ 
+6.1 In order to continually innovate and improve the SDK, Google may collect certain usage statistics from the software including but not limited to a unique identifier, associated IP address, version number of the software, and information on which tools and/or services in the SDK are being used and how they are being used. Before any of this information is collected, the SDK will notify you and seek your consent. If you withhold consent, the information will not be collected.
+ 
+6.2 The data collected is examined in the aggregate to improve the SDK and is maintained in accordance with Google's Privacy Policy.
+ 
+7. Third Party Applications for the Android Platform
+ 
+7.1 If you use the SDK to run applications developed by a third party or that access data, content or resources provided by a third party, you agree that Google is not responsible for those applications, data, content, or resources. You understand that all data, content or resources which you may access through such third party applications are the sole responsibility of the person from which they originated and that Google is not liable for any loss or damage that you may experience as a result of the use or access of any of those third party applications, data, content, or resources.
+ 
+7.2 You should be aware the data, content, and resources presented to you through such a third party application may be protected by intellectual property rights which are owned by the providers (or by other persons or companies on their behalf). You may not modify, rent, lease, loan, sell, distribute or create derivative works based on these data, content, or resources (either in whole or in part) unless you have been specifically given permission to do so by the relevant owners.
+ 
+7.3 You acknowledge that your use of such third party applications, data, content, or resources may be subject to separate terms between you and the relevant third party. In that case, this License Agreement does not affect your legal relationship with these third parties.
+ 
+8. Using Android APIs
+ 
+8.1 Google Data APIs
+ 
+8.1.1 If you use any API to retrieve data from Google, you acknowledge that the data may be protected by intellectual property rights which are owned by Google or those parties that provide the data (or by other persons or companies on their behalf). Your use of any such API may be subject to additional Terms of Service. You may not modify, rent, lease, loan, sell, distribute or create derivative works based on this data (either in whole or in part) unless allowed by the relevant Terms of Service.
+ 
+8.1.2 If you use any API to retrieve a user's data from Google, you acknowledge and agree that you shall retrieve data only with the user's explicit consent and only when, and for the limited purposes for which, the user has given you permission to do so.
+ 
+9. Terminating this License Agreement
+ 
+9.1 This License Agreement will continue to apply until terminated by either you or Google as set out below.
+ 
+9.2 If you want to terminate this License Agreement, you may do so by ceasing your use of the SDK and any relevant developer credentials.
+ 
+9.3 Google may at any time, terminate this License Agreement with you if:
+ 
+(A) you have breached any provision of this License Agreement; or
+ 
+(B) Google is required to do so by law; or
+ 
+(C) the partner with whom Google offered certain parts of SDK (such as APIs) to you has terminated its relationship with Google or ceased to offer certain parts of the SDK to you; or
+ 
+(D) Google decides to no longer providing the SDK or certain parts of the SDK to users in the country in which you are resident or from which you use the service, or the provision of the SDK or certain SDK services to you by Google is, in Google's sole discretion, no longer commercially viable.
+ 
+9.4 When this License Agreement comes to an end, all of the legal rights, obligations and liabilities that you and Google have benefited from, been subject to (or which have accrued over time whilst this License Agreement has been in force) or which are expressed to continue indefinitely, shall be unaffected by this cessation, and the provisions of paragraph 14.7 shall continue to apply to such rights, obligations and liabilities indefinitely.
+ 
+10. DISCLAIMER OF WARRANTIES
+ 
+10.1 YOU EXPRESSLY UNDERSTAND AND AGREE THAT YOUR USE OF THE SDK IS AT YOUR SOLE RISK AND THAT THE SDK IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTY OF ANY KIND FROM GOOGLE.
+ 
+10.2 YOUR USE OF THE SDK AND ANY MATERIAL DOWNLOADED OR OTHERWISE OBTAINED THROUGH THE USE OF THE SDK IS AT YOUR OWN DISCRETION AND RISK AND YOU ARE SOLELY RESPONSIBLE FOR ANY DAMAGE TO YOUR COMPUTER SYSTEM OR OTHER DEVICE OR LOSS OF DATA THAT RESULTS FROM SUCH USE.
+ 
+10.3 GOOGLE FURTHER EXPRESSLY DISCLAIMS ALL WARRANTIES AND CONDITIONS OF ANY KIND, WHETHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO THE IMPLIED WARRANTIES AND CONDITIONS OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.
+ 
+11. LIMITATION OF LIABILITY
+ 
+11.1 YOU EXPRESSLY UNDERSTAND AND AGREE THAT GOOGLE, ITS SUBSIDIARIES AND AFFILIATES, AND ITS LICENSORS SHALL NOT BE LIABLE TO YOU UNDER ANY THEORY OF LIABILITY FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL CONSEQUENTIAL OR EXEMPLARY DAMAGES THAT MAY BE INCURRED BY YOU, INCLUDING ANY LOSS OF DATA, WHETHER OR NOT GOOGLE OR ITS REPRESENTATIVES HAVE BEEN ADVISED OF OR SHOULD HAVE BEEN AWARE OF THE POSSIBILITY OF ANY SUCH LOSSES ARISING.
+ 
+12. Indemnification
+ 
+12.1 To the maximum extent permitted by law, you agree to defend, indemnify and hold harmless Google, its affiliates and their respective directors, officers, employees and agents from and against any and all claims, actions, suits or proceedings, as well as any and all losses, liabilities, damages, costs and expenses (including reasonable attorneys fees) arising out of or accruing from (a) your use of the SDK, (b) any application you develop on the SDK that infringes any copyright, trademark, trade secret, trade dress, patent or other intellectual property right of any person or defames any person or violates their rights of publicity or privacy, and (c) any non-compliance by you with this License Agreement.
+ 
+13. Changes to the License Agreement
+ 
+13.1 Google may make changes to the License Agreement as it distributes new versions of the SDK. When these changes are made, Google will make a new version of the License Agreement available on the website where the SDK is made available.
+ 
+14. General Legal Terms
+ 
+14.1 This License Agreement constitute the whole legal agreement between you and Google and govern your use of the SDK (excluding any services which Google may provide to you under a separate written agreement), and completely replace any prior agreements between you and Google in relation to the SDK.
+ 
+14.2 You agree that if Google does not exercise or enforce any legal right or remedy which is contained in this License Agreement (or which Google has the benefit of under any applicable law), this will not be taken to be a formal waiver of Google's rights and that those rights or remedies will still be available to Google.
+ 
+14.3 If any court of law, having the jurisdiction to decide on this matter, rules that any provision of this License Agreement is invalid, then that provision will be removed from this License Agreement without affecting the rest of this License Agreement. The remaining provisions of this License Agreement will continue to be valid and enforceable.
+ 
+14.4 You acknowledge and agree that each member of the group of companies of which Google is the parent shall be third party beneficiaries to this License Agreement and that such other companies shall be entitled to directly enforce, and rely upon, any provision of this License Agreement that confers a benefit on (or rights in favor of) them. Other than this, no other person or company shall be third party beneficiaries to this License Agreement.
+ 
+14.5 EXPORT RESTRICTIONS. THE SDK IS SUBJECT TO UNITED STATES EXPORT LAWS AND REGULATIONS. YOU MUST COMPLY WITH ALL DOMESTIC AND INTERNATIONAL EXPORT LAWS AND REGULATIONS THAT APPLY TO THE SDK. THESE LAWS INCLUDE RESTRICTIONS ON DESTINATIONS, END USERS AND END USE.
+ 
+14.6 The rights granted in this License Agreement may not be assigned or transferred by either you or Google without the prior written approval of the other party. Neither you nor Google shall be permitted to delegate their responsibilities or obligations under this License Agreement without the prior written approval of the other party.
+ 
+14.7 This License Agreement, and your relationship with Google under this License Agreement, shall be governed by the laws of the State of California without regard to its conflict of laws provisions. You and Google agree to submit to the exclusive jurisdiction of the courts located within the county of Santa Clara, California to resolve any legal matter arising from this License Agreement. Notwithstanding this, you agree that Google shall still be allowed to apply for injunctive remedies (or an equivalent type of urgent legal relief) in any jurisdiction.
+ 
+April 10, 2009
+    </sdk:license> 
+ 
+ 
+    <!-- Generated on Thu Oct 22 10:16:34 PDT 2009 using eclair-sdk 17704: Platform. Addon. Tools. Doc. --> 
+ 
+    <sdk:platform> 
+        <sdk:version>2.0</sdk:version>    
+        <sdk:api-level>5</sdk:api-level> 
+        <sdk:codename></sdk:codename> 
+        <sdk:revision>01</sdk:revision> 
+        <sdk:min-tools-rev>3</sdk:min-tools-rev> 
+        <sdk:description>Android SDK Platform 2.0, revision 1</sdk:description> 
+        <sdk:desc-url>http://developer.android.com/sdk/android-2.0.html</sdk:desc-url> 
+        <sdk:obsolete /> 
+        <sdk:archives> 
+            <sdk:archive os='linux' arch='any'> 
+                <sdk:size>75095268</sdk:size> 
+                <sdk:checksum type='sha1'>be9be6a99ca32875c96ec7f91160ca9fce7e3c7d</sdk:checksum> 
+                <sdk:url>android-2.0_r01-linux.zip</sdk:url> 
+            </sdk:archive> 
+            <sdk:archive os='macosx' arch='any'> 
+                <sdk:size>74956356</sdk:size> 
+                <sdk:checksum type='sha1'>2a866d0870dbba18e0503cd41e5fae988a21b314</sdk:checksum> 
+                <sdk:url>android-2.0_r01-macosx.zip</sdk:url> 
+            </sdk:archive> 
+            <sdk:archive os='windows' arch='any'> 
+                <sdk:size>76288040</sdk:size> 
+                <sdk:checksum type='sha1'>aeb623217ff88b87216d6eb7dbc846ed53f68f57</sdk:checksum> 
+                <sdk:url>android-2.0_r01-windows.zip</sdk:url> 
+            </sdk:archive> 
+        </sdk:archives> 
+    </sdk:platform> 
+ 
+    <sdk:add-on> 
+        <sdk:name>Google APIs</sdk:name> 
+        <sdk:api-level>5</sdk:api-level> 
+        <sdk:vendor>Google Inc.</sdk:vendor> 
+        <sdk:revision>01</sdk:revision> 
+        <sdk:description>Android + Google APIs, revision 1</sdk:description> 
+        <sdk:desc-url>http://developer.android.com/</sdk:desc-url> 
+        <sdk:uses-license ref='android-sdk-license' /> 
+        <sdk:obsolete /> 
+        <sdk:archives> 
+            <sdk:archive os='any'> 
+                <sdk:size>49123776</sdk:size> 
+                <sdk:checksum type='sha1'>46eaeb56b645ee7ffa24ede8fa17f3df70db0503</sdk:checksum> 
+                <sdk:url>google_apis-5_r01.zip</sdk:url> 
+            </sdk:archive> 
+        </sdk:archives> 
+        <sdk:libs> 
+            <sdk:lib> 
+                <sdk:name>com.google.android.maps</sdk:name> 
+                <sdk:description>API for Google Maps.</sdk:description> 
+            </sdk:lib> 
+        </sdk:libs> 
+    </sdk:add-on> 
+ 
+    <!-- Generated on Mon Nov 23 14:08:02 PST 2009 using eclair-release 20723: Platform. Addon. --> 
+ 
+    <sdk:platform> 
+        <sdk:version>2.0.1</sdk:version>    
+        <sdk:api-level>6</sdk:api-level> 
+        <sdk:codename></sdk:codename> 
+        <sdk:revision>01</sdk:revision> 
+        <sdk:min-tools-rev>4</sdk:min-tools-rev> 
+        <sdk:description>Android SDK Platform 2.0.1_r1</sdk:description> 
+        <sdk:desc-url>http://developer.android.com/sdk/android-2.0.1.html</sdk:desc-url> 
+        <sdk:obsolete /> 
+        <sdk:archives> 
+            <sdk:archive os='linux' arch='any'> 
+                <sdk:size>79192618</sdk:size> 
+                <sdk:checksum type='sha1'>ce2c971dce352aa28af06bda92a070116aa5ae1a</sdk:checksum> 
+                <sdk:url>android-2.0.1_r01-linux.zip</sdk:url> 
+            </sdk:archive> 
+            <sdk:archive os='macosx' arch='any'> 
+                <sdk:size>79035527</sdk:size> 
+                <sdk:checksum type='sha1'>c3096f80d75a6fc8cb38ef8a18aec920e53d42c0</sdk:checksum> 
+                <sdk:url>android-2.0.1_r01-macosx.zip</sdk:url> 
+            </sdk:archive> 
+            <sdk:archive os='windows' arch='any'> 
+                <sdk:size>80385601</sdk:size> 
+                <sdk:checksum type='sha1'>255781ebe4509d9707d0e77edda2815e2bc216e6</sdk:checksum> 
+                <sdk:url>android-2.0.1_r01-windows.zip</sdk:url> 
+            </sdk:archive> 
+        </sdk:archives> 
+    </sdk:platform> 
+ 
+    <sdk:add-on> 
+        <sdk:name>Google APIs</sdk:name> 
+        <sdk:api-level>6</sdk:api-level> 
+        <sdk:vendor>Google Inc.</sdk:vendor> 
+        <sdk:revision>1</sdk:revision> 
+        <sdk:description>Android + Google APIs, revision 1</sdk:description> 
+        <sdk:desc-url>http://developer.android.com/</sdk:desc-url> 
+        <sdk:obsolete /> 
+        <sdk:uses-license ref='android-sdk-license' /> 
+        <sdk:archives> 
+            <sdk:archive os='any'> 
+                <sdk:size>53382941</sdk:size> 
+                <sdk:checksum type='sha1'>5ff545d96e031e09580a6cf55713015c7d4936b2</sdk:checksum> 
+                <sdk:url>google_apis-6_r01.zip</sdk:url> 
+            </sdk:archive> 
+        </sdk:archives> 
+        <sdk:libs> 
+            <sdk:lib> 
+                <sdk:name>com.google.android.maps</sdk:name> 
+                <sdk:description>API for Google Maps.</sdk:description> 
+            </sdk:lib> 
+        </sdk:libs> 
+    </sdk:add-on> 
+ 
+ 
+    <!-- Generated on Tue Nov 24 16:38:28 PST 2009 using donut 20842: Platform. Addon. --> 
+ 
+    <sdk:add-on> 
+        <sdk:name>Google APIs</sdk:name> 
+        <sdk:api-level>4</sdk:api-level> 
+        <sdk:vendor>Google Inc.</sdk:vendor> 
+        <sdk:revision>2</sdk:revision> 
+        <sdk:description>Android + Google APIs, revision 2</sdk:description> 
+        <sdk:desc-url>http://developer.android.com/</sdk:desc-url> 
+        <sdk:uses-license ref='android-sdk-license' /> 
+        <sdk:archives> 
+            <sdk:archive os='any'> 
+                <sdk:size>42435735</sdk:size> 
+                <sdk:checksum type='sha1'>9b6e86d8568558de4d606a7debc4f6049608dbd0</sdk:checksum> 
+                <sdk:url>google_apis-4_r02.zip</sdk:url> 
+            </sdk:archive> 
+        </sdk:archives> 
+        <sdk:libs> 
+            <sdk:lib> 
+                <sdk:name>com.google.android.maps</sdk:name> 
+                <sdk:description>API for Google Maps.</sdk:description> 
+            </sdk:lib> 
+        </sdk:libs> 
+    </sdk:add-on> 
+ 
+ 
+ 
+    <!-- Generated on Fri Dec 11 18:04:16 PST 2009 using eclair 22134: Usb driver. --> 
+ 
+    <sdk:extra> 
+        <sdk:path>usb_driver</sdk:path> 
+        <sdk:revision>3</sdk:revision> 
+        <sdk:description>USB Driver for Windows, revision 3</sdk:description> 
+        <sdk:desc-url>http://developer.android.com/</sdk:desc-url> 
+        <sdk:uses-license ref='android-sdk-license' /> 
+        <sdk:archives> 
+            <sdk:archive os='windows'> 
+                <sdk:size>6396304</sdk:size> 
+                <sdk:checksum type='sha1'>82ce3bb34f8cd587bfdd263f3ae4eb4932364204</sdk:checksum> 
+                <sdk:url>usb_driver_r03-windows.zip</sdk:url> 
+            </sdk:archive> 
+        </sdk:archives> 
+    </sdk:extra> 
+ 
+ 
+    <!-- Generated on Mon Dec 21 14:36:17 PST 2009 using eclair-release 22607: Platform. Addon. --> 
+ 
+    <sdk:add-on> 
+        <sdk:name>Google APIs</sdk:name> 
+        <sdk:api-level>7</sdk:api-level> 
+        <sdk:vendor>Google Inc.</sdk:vendor> 
+        <sdk:revision>1</sdk:revision> 
+        <sdk:description>Android + Google APIs, revision 1</sdk:description> 
+        <sdk:desc-url>http://developer.android.com/</sdk:desc-url> 
+        <sdk:uses-license ref='android-sdk-license' /> 
+        <sdk:archives> 
+            <sdk:archive os='any'> 
+                <sdk:size>53691339</sdk:size> 
+                <sdk:checksum type='sha1'>2e7f91e0fe34fef7f58aeced973c6ae52361b5ac</sdk:checksum> 
+                <sdk:url>google_apis-7_r01.zip</sdk:url> 
+            </sdk:archive> 
+        </sdk:archives> 
+        <sdk:libs> 
+            <sdk:lib> 
+                <sdk:name>com.google.android.maps</sdk:name> 
+                <sdk:description>API for Google Maps.</sdk:description> 
+            </sdk:lib> 
+        </sdk:libs> 
+    </sdk:add-on> 
+ 
+ 
+    <!-- Generated on Mon Feb 22 13:39:38 PST 2010 using eclair 25887: Samples. --> 
+ 
+    <sdk:sample> 
+        <sdk:api-level>7</sdk:api-level> 
+        <sdk:codename></sdk:codename> 
+        <sdk:revision>01</sdk:revision> 
+        <sdk:description>Android SDK Samples for Android API 7, revision 1</sdk:description> 
+        <sdk:desc-url>http://developer.android.com/sdk/</sdk:desc-url> 
+        <sdk:archives> 
+            <sdk:archive os='any' arch='any'> 
+                <sdk:size>7677831</sdk:size> 
+                <sdk:checksum type='sha1'>51e4907f60f248ede5c58b54ce7b6ae0b473e0ca</sdk:checksum> 
+                <sdk:url>samples-2.1_r01-linux.zip</sdk:url> 
+            </sdk:archive> 
+        </sdk:archives> 
+    </sdk:sample> 
+ 
+ 
+    <!-- Generated manually from earlier versions --> 
+    <sdk:platform> 
+        <sdk:version>1.5</sdk:version> 
+        <sdk:api-level>3</sdk:api-level> 
+        <sdk:revision>04</sdk:revision> 
+        <sdk:min-tools-rev>6</sdk:min-tools-rev> 
+        <sdk:description>Android SDK Platform 1.5_r3</sdk:description> 
+        <sdk:desc-url>http://developer.android.com/sdk/android-1.5.html</sdk:desc-url> 
+        <sdk:archives> 
+            <sdk:archive os="windows" arch="any"> 
+                <sdk:size>54624370</sdk:size> 
+                <sdk:checksum type="sha1">5bb106d2e40d481edd337b0833093843e15fe49a</sdk:checksum> 
+                <sdk:url>android-1.5_r04-windows.zip</sdk:url> 
+            </sdk:archive> 
+            <sdk:archive os="macosx" arch="any"> 
+                <sdk:size>52440607</sdk:size> 
+                <sdk:checksum type="sha1">d3a67c2369afa48b6c3c7624de5031c262018d1e</sdk:checksum> 
+                <sdk:url>android-1.5_r04-macosx.zip</sdk:url> 
+            </sdk:archive> 
+            <sdk:archive os="linux" arch="any"> 
+                <sdk:size>53348669</sdk:size> 
+                <sdk:checksum type="sha1">5c134b7df5f4b8bd5b61ba93bdaebada8fa3468c</sdk:checksum> 
+                <sdk:url>android-1.5_r04-linux.zip</sdk:url> 
+            </sdk:archive> 
+        </sdk:archives> 
+    </sdk:platform> 
+ 
+    <sdk:platform> 
+        <sdk:version>1.6</sdk:version>    
+        <sdk:api-level>4</sdk:api-level> 
+        <sdk:codename></sdk:codename> 
+        <sdk:revision>03</sdk:revision> 
+        <sdk:min-tools-rev>6</sdk:min-tools-rev> 
+        <sdk:description>Android SDK Platform 1.6_r2</sdk:description> 
+        <sdk:desc-url>http://developer.android.com/sdk/android-1.6.html</sdk:desc-url> 
+        <sdk:archives> 
+            <sdk:archive os='linux' arch='any'> 
+                <sdk:size>63454485</sdk:size> 
+                <sdk:checksum type='sha1'>483ed088e45bbdf3444baaf9250c8b02e5383cb0</sdk:checksum> 
+                <sdk:url>android-1.6_r03-linux.zip</sdk:url> 
+            </sdk:archive> 
+            <sdk:archive os='macosx' arch='any'> 
+                <sdk:size>62418496</sdk:size> 
+                <sdk:checksum type='sha1'>bdafad44f5df9f127979bdb21a1fdd87ee3cd625</sdk:checksum> 
+                <sdk:url>android-1.6_r03-macosx.zip</sdk:url> 
+            </sdk:archive> 
+            <sdk:archive os='windows' arch='any'> 
+                <sdk:size>64654625</sdk:size> 
+                <sdk:checksum type='sha1'>ce0b5e4ffaf12ca4fd07c2da71a8a1ab4a03dc22</sdk:checksum> 
+                <sdk:url>android-1.6_r03-windows.zip</sdk:url> 
+            </sdk:archive> 
+        </sdk:archives> 
+    </sdk:platform> 
+ 
+ 
+    <!-- Generated on Thu May  6 15:57:41 PDT 2010 using eclair 35983: Platform. --> 
+ 
+    <sdk:platform> 
+        <sdk:version>2.1</sdk:version>    
+        <sdk:api-level>7</sdk:api-level> 
+        <sdk:codename></sdk:codename> 
+        <sdk:revision>02</sdk:revision> 
+        <sdk:min-tools-rev>6</sdk:min-tools-rev> 
+        <sdk:description>Android SDK Platform 2.1_r2</sdk:description> 
+        <sdk:desc-url>http://developer.android.com/sdk/</sdk:desc-url> 
+        <sdk:archives> 
+            <sdk:archive os='linux' arch='any'> 
+                <sdk:size>72356359</sdk:size> 
+                <sdk:checksum type='sha1'>a89d32ddf9d8629f15e682bdf220a88ca2392349</sdk:checksum> 
+                <sdk:url>android-2.1_r02-linux.zip</sdk:url> 
+            </sdk:archive> 
+            <sdk:archive os='macosx' arch='any'> 
+                <sdk:size>71054909</sdk:size> 
+                <sdk:checksum type='sha1'>8492e2f0b61819c4ca2e16601fc3260b341a3f06</sdk:checksum> 
+                <sdk:url>android-2.1_r02-macosx.zip</sdk:url> 
+            </sdk:archive> 
+            <sdk:archive os='windows' arch='any'> 
+                <sdk:size>72950641</sdk:size> 
+                <sdk:checksum type='sha1'>00cfb0bbbf24fc56c493990186deb0bfd44630e5</sdk:checksum> 
+                <sdk:url>android-2.1_r02-windows.zip</sdk:url> 
+            </sdk:archive> 
+        </sdk:archives> 
+    </sdk:platform> 
+ 
+ 
+    <!-- Generated on Fri May  7 14:38:42 PDT 2010 using froyo-release 36220: Platform. Addon. Tools. --> 
+ 
+    <sdk:tool> 
+        <sdk:revision>06</sdk:revision> 
+        <sdk:description>Android SDK Tools, revision 6</sdk:description> 
+        <sdk:desc-url>http://developer.android.com/sdk/</sdk:desc-url> 
+        <sdk:archives> 
+            <sdk:archive os='linux' arch='any'> 
+                <sdk:size>16957480</sdk:size> 
+                <sdk:checksum type='sha1'>1aa3dd92b9dd8c186c34359c6f6efedd25b37d67</sdk:checksum> 
+                <sdk:url>tools_r06-linux.zip</sdk:url> 
+            </sdk:archive> 
+            <sdk:archive os='macosx' arch='any'> 
+                <sdk:size>19105358</sdk:size> 
+                <sdk:checksum type='sha1'>00f1e08791d716e09c208c67ce2df0088254f8b1</sdk:checksum> 
+                <sdk:url>tools_r06-macosx.zip</sdk:url> 
+            </sdk:archive> 
+            <sdk:archive os='windows' arch='any'> 
+                <sdk:size>23215001</sdk:size> 
+                <sdk:checksum type='sha1'>19441427426f100e1d1d3427291521a9f8a72d66</sdk:checksum> 
+                <sdk:url>tools_r06-windows.zip</sdk:url> 
+            </sdk:archive> 
+        </sdk:archives> 
+    </sdk:tool> 
+ 
+ 
+    <!-- Generated on Tue May 11 19:15:20 PDT 2010 using froyo 36658: Samples. --> 
+ 
+    <sdk:sample> 
+        <sdk:api-level>8</sdk:api-level> 
+        <sdk:codename></sdk:codename> 
+        <sdk:revision>01</sdk:revision> 
+        <sdk:description>Android SDK Samples for Android API 8, revision 1</sdk:description> 
+        <sdk:desc-url>http://developer.android.com/sdk/</sdk:desc-url> 
+        <sdk:archives> 
+            <sdk:archive os='any' arch='any'> 
+                <sdk:size>7969716</sdk:size> 
+                <sdk:checksum type='sha1'>d16d8bf2dd84cedf73b98b948d66461c8f19d6fb</sdk:checksum> 
+                <sdk:url>samples-2.2_r01-linux.zip</sdk:url> 
+            </sdk:archive> 
+        </sdk:archives> 
+    </sdk:sample> 
+ 
+    <!-- Generated on Fri May 14 16:00:15 PDT 2010 using froyo 37300: Doc. --> 
+ 
+    <sdk:doc> 
+        <sdk:api-level>8</sdk:api-level> 
+        <sdk:codename></sdk:codename> 
+        <sdk:revision>01</sdk:revision> 
+        <sdk:description>Android SDK Docs for Android API 8, revision 1</sdk:description> 
+        <sdk:desc-url>http://developer.android.com/sdk/</sdk:desc-url> 
+        <sdk:archives> 
+            <sdk:archive os='any' arch='any'> 
+                <sdk:size>60112864</sdk:size> 
+                <sdk:checksum type='sha1'>6feead7dd21da36e07838bdfc0ddebdd336940ce</sdk:checksum> 
+                <sdk:url>docs-2.2_r01-linux.zip</sdk:url> 
+            </sdk:archive> 
+        </sdk:archives> 
+    </sdk:doc> 
+ 
+    <!-- Generated on Wed Jun 30 16:13:06 PDT 2010 using froyo-release 43546: Platform. Addon. --> 
+ 
+    <sdk:platform> 
+        <sdk:version>2.2</sdk:version>    
+        <sdk:api-level>8</sdk:api-level> 
+        <sdk:codename></sdk:codename> 
+        <sdk:revision>02</sdk:revision> 
+        <sdk:description>Android SDK Platform 2.2_r1</sdk:description> 
+        <sdk:desc-url>http://developer.android.com/sdk/</sdk:desc-url> 
+        <sdk:archives> 
+            <sdk:archive os='linux' arch='any'> 
+                <sdk:size>76884517</sdk:size> 
+                <sdk:checksum type='sha1'>70b841b828e0db73eb58fc76f480e78783fd5bfc</sdk:checksum> 
+                <sdk:url>android-2.2_r02-linux.zip</sdk:url> 
+            </sdk:archive> 
+            <sdk:archive os='macosx' arch='any'> 
+                <sdk:size>75048163</sdk:size> 
+                <sdk:checksum type='sha1'>e40838cc805fbfea76f62b42d4749f0ca549a058</sdk:checksum> 
+                <sdk:url>android-2.2_r02-macosx.zip</sdk:url> 
+            </sdk:archive> 
+            <sdk:archive os='windows' arch='any'> 
+                <sdk:size>77478546</sdk:size> 
+                <sdk:checksum type='sha1'>e80ddc2f8f9929bc8d46bc579be86d43317adb57</sdk:checksum> 
+                <sdk:url>android-2.2_r02-windows.zip</sdk:url> 
+            </sdk:archive> 
+        </sdk:archives> 
+    </sdk:platform> 
+ 
+    <sdk:add-on> 
+        <sdk:name>Google APIs</sdk:name> 
+        <sdk:api-level>8</sdk:api-level> 
+        <sdk:vendor>Google Inc.</sdk:vendor> 
+        <sdk:revision>2</sdk:revision> 
+        <sdk:description>Android + Google APIs, API 8, revision 2</sdk:description> 
+        <sdk:desc-url>http://developer.android.com/</sdk:desc-url> 
+        <sdk:uses-license ref='android-sdk-license' /> 
+        <sdk:archives> 
+            <sdk:archive os='any'> 
+                <sdk:size>59505020</sdk:size> 
+                <sdk:checksum type='sha1'>3079958e7ec87222cac1e6b27bc471b27bf2c352</sdk:checksum> 
+                <sdk:url>google_apis-8_r02.zip</sdk:url> 
+            </sdk:archive> 
+        </sdk:archives> 
+        <sdk:libs> 
+            <sdk:lib> 
+                <sdk:name>com.google.android.maps</sdk:name> 
+                <sdk:description>API for Google Maps.</sdk:description> 
+            </sdk:lib> 
+        </sdk:libs> 
+    </sdk:add-on> 
+ 
+    <sdk:extra> 
+        <sdk:path>market_licensing</sdk:path> 
+        <sdk:revision>1</sdk:revision> 
+        <sdk:description>Android Market Licensing client library</sdk:description> 
+        <sdk:desc-url>http://developer.android.com/guide/publishing/licensing.html</sdk:desc-url> 
+        <sdk:archives> 
+            <sdk:archive os='any'> 
+                <sdk:size>266638</sdk:size> 
+                <sdk:checksum type='sha1'>1ad0de56406cdf30d53e46545fc2db6c41c81707</sdk:checksum> 
+                <sdk:url>market_licensing-r01.zip</sdk:url> 
+            </sdk:archive> 
+        </sdk:archives> 
+    </sdk:extra> 
+ 
+</sdk:sdk-repository> 
