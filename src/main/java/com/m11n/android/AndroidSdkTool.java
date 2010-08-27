@@ -207,7 +207,7 @@ public class AndroidSdkTool
 		    buf.append("Pkg.Desc=" + addOn.getDescription() + "\n");
 		    buf.append("Pkg.UserSrc=false" + "\n"); // TODO: where does this come from?
 		    buf.append("Platform.Version=" + platformVersion + "\n");
-		    buf.append("Pkg.Revision=" + addOn.getRevision() + "\n");
+		    buf.append("Pkg.Revision=" + pr + "\n");
 		    buf.append("AndroidVersion.ApiLevel=" + addOn.getApiLevel() + "\n");
 
 		    FileUtils.writeStringToFile(file, buf.toString());
