@@ -189,6 +189,12 @@ public class AndroidSdkTool
 		try
         {
 			String platformVersion = apiLevelToVersion.get(addOn.getApiLevel())==null? "" : apiLevelToVersion.get(addOn.getApiLevel());
+			String pr = addOn.getRevision();
+			
+			if(pr.length()>1 && pr.startsWith("0"))
+			{
+				pr = pr.substring(1);
+			}
 			
 			if(verbose)
 			{
