@@ -2,13 +2,19 @@ package com.m11n.android.util;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Enumeration;
+import java.util.zip.GZIPInputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
+import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
+import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
 import org.apache.commons.io.IOUtils;
 
 public class CompressUtil
@@ -27,12 +33,9 @@ public class CompressUtil
 				ZipEntry entry = e.nextElement();
 				unzip(zipfile, entry, outputDir);
 				
-				if(first)
+				if(first && entry.isDirectory())
 				{
-					if(entry.isDirectory())
-					{
-						root = entry.getName();
-					}
+					root = outputDir + File.separator + entry.getName();
 					
 					first = false;
 				}
@@ -75,6 +78,114 @@ public class CompressUtil
 			IOUtils.closeQuietly(outputStream);
 			IOUtils.closeQuietly(inputStream);
 		}
+	}
+
+	public static String untargz(File archive, File outputDir)
+	{
+		String s = archive.getAbsolutePath();
+		String root = null;
+		boolean first = true;
+		
+		while(s.contains("tar") || s.contains("gz") || s.contains("tgz"))
+		{
+			s = s.substring(0, s.lastIndexOf(".")); 
+		}
+		
+		s = s + ".tar";
+		
+		try
+		{
+			GZIPInputStream input = new GZIPInputStream(new FileInputStream(archive));
+			FileOutputStream fos = new FileOutputStream(new File(s));
+
+			org.apache.commons.compress.utils.IOUtils.copy(input, fos);
+			
+			IOUtils.closeQuietly(input);
+			IOUtils.closeQuietly(fos);
+			
+			TarArchiveInputStream tis = new TarArchiveInputStream(new FileInputStream(s));
+
+			for(TarArchiveEntry entry=tis.getNextTarEntry(); entry!=null;)
+			{
+				unpackEntries(tis, entry, outputDir);
+				
+				if(first && entry.isDirectory())
+				{
+					root = outputDir + File.separator + entry.getName();
+				}
+
+				entry = tis.getNextTarEntry();
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		return root;
+	}
+	
+	private static void unpackEntries(TarArchiveInputStream tis, TarArchiveEntry entry, File outputDir)
+	throws IOException
+	{
+		if (entry.isDirectory())
+		{
+			createDir(new File(outputDir, entry.getName()));
+			File subDir = new File(outputDir, entry.getName());
+			
+			for(TarArchiveEntry e : entry.getDirectoryEntries())
+			{
+				unpackEntries(tis, e, subDir);
+			}
+			
+			return;
+		}
+
+		File outputFile = new File(outputDir, entry.getName());
+		
+		if (!outputFile.getParentFile().exists())
+		{
+			createDir(outputFile.getParentFile());
+		}
+		
+		BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(outputFile));
+
+		try
+		{
+			byte[] content = new byte[(int)entry.getSize()];
+			
+			tis.read(content);
+			
+			if(content.length>0)
+			{
+				IOUtils.copy(new ByteArrayInputStream(content), outputStream);
+			}
+		}
+		finally
+		{
+			IOUtils.closeQuietly(outputStream);
+		}
+	}
+	
+	public static String ungzip(File archive, File outputDir)
+	{
+		String s = archive.getAbsolutePath();
+		
+		if(s.endsWith("gzip") || s.endsWith("gz"))
+		{
+			s = s.substring(0, s.lastIndexOf(".")); 
+		}
+		
+		try
+		{
+			org.apache.commons.compress.utils.IOUtils.copy(new GzipCompressorInputStream(new FileInputStream(archive)), new FileOutputStream(new File(s)));
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		return s;
 	}
 
 	private static void createDir(File dir)

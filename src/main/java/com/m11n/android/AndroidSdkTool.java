@@ -6,11 +6,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpEntity;
@@ -49,16 +50,38 @@ public class AndroidSdkTool
 {
 	private static final Logger logger = LogManager.getLogger(AndroidSdkTool.class);
 	
+	private String rootDir;
+	private String os;
+	private String revision;
+	private String architecture;
 	private String repositoryUrl = "http://dl-ssl.google.com/android/repository/";
 	private String sdkUrl = "http://dl.google.com/android/";
-	private String downloadDir = System.getProperty("java.io.tmpdir") + "/";
+	private String downloadDir;
 	private Boolean overwrite = true;
 	private Boolean verbose = true;
 	private DocumentBuilder builder;
+	private Map<String, String> apiLevelToVersion = new HashMap<String, String>();
 
-	public AndroidSdkTool() throws ParserConfigurationException
+	public AndroidSdkTool(String revision, String os, String architecture, String rootDir, boolean overwrite, boolean verbose)
+	throws Exception
 	{
 		builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+		
+		this.revision = revision;
+		this.os = os;
+		this.architecture = architecture;
+		this.rootDir = rootDir;
+		this.overwrite = overwrite;
+		this.verbose = verbose;
+		
+		downloadDir = System.getProperty("java.io.tmpdir") + "/android.tmp/" + os + "/";
+
+		File tmp = new File(downloadDir);
+		
+		if(!tmp.exists())
+		{
+			tmp.mkdirs();
+		}
 	}
 
 	public Repository downloadRepository()
@@ -67,7 +90,7 @@ public class AndroidSdkTool
 		
 		try
 		{
-			download(repositoryUrl + file, downloadDir + file, overwrite);
+        	download(repositoryUrl + file, downloadDir + file, overwrite);
 
         	if(verbose)
         	{
@@ -84,7 +107,7 @@ public class AndroidSdkTool
 		return null;
 	}
 
-	public String downloadSdk(String revision, String os, String architecture)
+	public String downloadSdk()
 	{
 		String file = "android-sdk_r" + revision + "-" + os + (architecture==null? "" : "_" + architecture) + "." + ("linux".equals(os)? "tgz" : "zip");
 		
@@ -111,9 +134,23 @@ public class AndroidSdkTool
 	{
 		try
         {
-			File tmp = new File(System.getProperty("java.io.tmpdir"));
+			File tmp = new File(downloadDir);
 			
-	        String root = CompressUtil.unzip(new File(fromFile), tmp);
+	        String root = null;
+	        
+	        if(verbose)
+	        {
+	        	logger.info("Installing " + fromFile + " to directory " + toDir);
+	        }
+	        
+	        if(fromFile.endsWith("zip"))
+	        {
+		        root = CompressUtil.unzip(new File(fromFile), tmp);
+	        }
+	        else if(fromFile.endsWith("tgz") || fromFile.endsWith("tar.gz"))
+	        {
+		        root = CompressUtil.untargz(new File(fromFile), tmp);
+	        }
 
         	File to = null;
 
@@ -128,7 +165,7 @@ public class AndroidSdkTool
 	        	to.mkdir();
 	        }
         	
-        	FileUtils.copyDirectory(new File(tmp.getAbsoluteFile() + "/" + root), to);
+        	FileUtils.copyDirectory(new File(root), to);
 	        
         	if(verbose)
         	{
@@ -144,14 +181,44 @@ public class AndroidSdkTool
         
         return false;
 	}
+	
+	public void writeSourceProperties(AddOn addOn)
+	{
+		File file = new File(getInstallDir(addOn) + File.separator + "source.properties");
+		
+		try
+        {
+			String platformVersion = apiLevelToVersion.get(addOn.getApiLevel())==null? "" : apiLevelToVersion.get(addOn.getApiLevel());
+			
+			if(verbose)
+			{
+				logger.info("Writing source.properties: " + file.getAbsolutePath());
+				logger.info("API Level " + addOn.getApiLevel() + " maps to " + platformVersion);
+			}
+			
+			StringBuffer buf = new StringBuffer();
+			
+		    buf.append("Pkg.Desc=" + addOn.getDescription() + "\n");
+		    buf.append("Pkg.UserSrc=false" + "\n"); // TODO: where does this come from?
+		    buf.append("Platform.Version=" + platformVersion + "\n");
+		    buf.append("Pkg.Revision=" + addOn.getRevision() + "\n");
+		    buf.append("AndroidVersion.ApiLevel=" + addOn.getApiLevel() + "\n");
+
+		    FileUtils.writeStringToFile(file, buf.toString());
+        }
+        catch (Exception e)
+        {
+	        logger.error(e.toString(), e);
+        }
+	}
 
 	public String downloadItem(Item item, String os)
 	{
 		String file = null;
-
+		
 		for (Archive archive : item.getArchives())
 		{
-			if (os.equals(archive.getOs()))
+			if (os.equals(escapeOs(archive.getOs())))
 			{
 				file = archive.getUrl();
 				break;
@@ -191,10 +258,50 @@ public class AndroidSdkTool
 
 		return null;
 	}
+	
+	public String escapeOs(String os)
+	{
+		if(os.toLowerCase().contains("win"))
+		{
+			return "windows";
+		}
+		else if(os.toLowerCase().contains("mac"))
+		{
+			return "mac";
+		}
+		else if(os.toLowerCase().contains("linux"))
+		{
+			return "linux";
+		}
+		else
+		{
+			return os;
+		}
+	}
+	
+	public boolean isLinux()
+	{
+		return (os.toLowerCase().contains("linux"));
+	}
+	
+	public boolean isWindows()
+	{
+		return (os.toLowerCase().contains("windows"));
+	}
+	
+	public boolean isMac()
+	{
+		return (os.toLowerCase().contains("mac"));
+	}
 
 	private void download(String url, String toFile, boolean overwrite)
 	throws Exception
 	{
+    	if(verbose)
+    	{
+			logger.info("Downloading: " + url + " ...");
+    	}
+
 		if(overwrite || !new File(toFile).exists())
 		{
 			Exception e = null;
@@ -235,6 +342,11 @@ public class AndroidSdkTool
 		{
 			logger.warn("File exists: " + toFile);
 		}
+
+		if(verbose)
+    	{
+			logger.info("... done.");
+    	}
 	}
 
 	private Repository parse(InputStream is)
@@ -256,7 +368,7 @@ public class AndroidSdkTool
 			{
 				License license = new License();
 				
-				license.setText(node.getNodeValue());
+				license.setText(node.getTextContent());
 				
 				repository.setLicense(license);
 			}
@@ -382,6 +494,7 @@ public class AndroidSdkTool
 			NodeList archiveNodeChildren = archiveNode.getChildNodes();
 			
 			Archive archive = new Archive();
+			boolean propertySet = false;
 			
 			NamedNodeMap attributes = archiveNode.getAttributes();
 			
@@ -394,10 +507,12 @@ public class AndroidSdkTool
 					if(Archive.OS.equals(attribute.getNodeName()))
 					{
 						archive.setOs(attribute.getTextContent());
+						propertySet = true;
 					}
 					else if(Archive.ARCH.equals(attribute.getNodeName()))
 					{
 						archive.setArchitecture(attribute.getTextContent());
+						propertySet = true;
 					}
 				}
 			}
@@ -411,6 +526,7 @@ public class AndroidSdkTool
 					archive.setChecksum(node.getTextContent());
 					
 					archive.setChecksumType(node.getAttributes().getNamedItem(Archive.TYPE).getTextContent());
+					propertySet = true;
 				}
 				else if(Archive.SIZE.equals(node.getNodeName()))
 				{
@@ -419,15 +535,21 @@ public class AndroidSdkTool
 					if(value!=null)
 					{
 						archive.setSize(Integer.valueOf(value));
+						propertySet = true;
 					}
 				}
 				if(Archive.URL.equals(node.getNodeName()))
 				{
 					archive.setUrl(node.getTextContent());
+					propertySet = true;
 				}
 			}
-			
-			archives.add(archive);
+
+			if(propertySet)
+			{
+				archives.add(archive);
+				propertySet = false;
+			}
 		}
 		
 		return archives;
@@ -492,38 +614,137 @@ public class AndroidSdkTool
     	this.verbose = verbose;
     }
 
-	public static String getInstallDir(String androidHome, Platform platform)
+	public String getRootDir()
+    {
+    	return rootDir;
+    }
+
+	public void setRootDir(String rootDir)
+    {
+    	this.rootDir = rootDir;
+    }
+
+	public String getOs()
+    {
+    	return os;
+    }
+
+	public void setOs(String os)
+    {
+    	this.os = os;
+    }
+
+	public String getRevision()
+    {
+    	return revision;
+    }
+
+	public void setRevision(String revision)
+    {
+    	this.revision = revision;
+    }
+
+	public String getArchitecture()
+    {
+    	return architecture;
+    }
+
+	public void setArchitecture(String architecture)
+    {
+    	this.architecture = architecture;
+    }
+
+	public String getInstallDir()
 	{
-		return androidHome + File.separator + "platforms" + File.separator + "android-" + platform.getApiLevel();
+		return rootDir + (rootDir.endsWith(File.separator)? "":File.separator) + "android-sdk-" + os + (architecture!=null? "_" + architecture : "");
 	}
 	
-	public static String getInstallDir(String androidHome, AddOn addOn)
+	public String getInstallDir(Platform platform)
+	{
+		if(verbose)
+		{
+			logger.info("Mapping API level " + platform.getApiLevel() + " to platform version " + platform.getVersion());
+		}
+
+		try
+        {
+			apiLevelToVersion.put(platform.getApiLevel(), platform.getVersion());
+			
+			return getInstallDir() + File.separator + "platforms" + File.separator + "android-" + platform.getApiLevel();
+        }
+        catch (Exception e)
+        {
+	        logger.error(e.toString(), e);
+        }
+        
+        return null;
+	}
+	
+	public String getInstallDir(AddOn addOn)
 	{
 		String name = "addon_" + addOn.getName() + "_" + addOn.getVendor() + "_" + addOn.getApiLevel();
 		name = name.replaceAll("\\ ", "_");
 		name = name.replaceAll("\\.", "");
 		name = name.toLowerCase();
 		
-		return androidHome + File.separator + "add-ons" + File.separator + name;
+		return getInstallDir() + File.separator + "add-ons" + File.separator + name;
 	}
 	
-	public static String getInstallDir(String androidHome, Sample sample)
+	public String getInstallDir(Sample sample)
 	{
-		return androidHome + File.separator + "samples" + File.separator + "android-" + sample.getApiLevel();
+		return getInstallDir() + File.separator + "samples" + File.separator + "android-" + sample.getApiLevel();
 	}
 	
-	public static String getInstallDir(String androidHome, Doc doc)
+	public String getInstallDir(Doc doc)
 	{
-		return androidHome + File.separator + "docs" + File.separator;
+		return getInstallDir() + File.separator + "docs" + File.separator;
 	}
 	
-	public static String getInstallDir(String androidHome, Tool tool)
+	public String getInstallDir(Tool tool)
 	{
-		return androidHome + File.separator + "tools" + File.separator;
+		return getInstallDir() + File.separator + "tools" + File.separator;
 	}
 	
-	public static String getInstallDir(String androidHome, Extra extra)
+	public String getInstallDir(Extra extra)
 	{
-		return androidHome + File.separator;
+		return getInstallDir() + File.separator;
 	}
+
+	public static String getDefaultOperatingSystem()
+	{
+		String os = System.getProperty("os.name").toLowerCase();
+
+		if(os.indexOf( "win" ) >= 0)
+		{
+			return "windows";
+		}
+		else if(os.indexOf( "mac" ) >= 0)
+		{
+			return "mac";
+		}
+		else if(os.indexOf( "linux" ) >= 0)
+		{
+			return "linux";
+		}
+		else
+		{
+			return "unknown";
+		}
+	}
+ 
+	public static String getDefaultArchitecture()
+	{
+		String arch = System.getProperty("os.arch").toLowerCase();
+
+		// NOTE: only mac and linux SDKs have architecture params
+		if(!"win".equals(getDefaultOperatingSystem()) && arch.indexOf( "x86" ) >= 0)
+		{
+			return "86";
+		}
+		else
+		{
+			return null;
+		}
+	}
+ 
 }
