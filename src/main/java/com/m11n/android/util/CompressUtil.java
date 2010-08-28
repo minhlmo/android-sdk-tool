@@ -2,11 +2,14 @@ package com.m11n.android.util;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Enumeration;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.ZipEntry;
@@ -16,6 +19,8 @@ import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
 import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
 import org.apache.commons.io.IOUtils;
+
+import com.m11n.android.AndroidSdkTool;
 
 public class CompressUtil
 {
@@ -159,17 +164,59 @@ public class CompressUtil
 			if(content.length>0)
 			{
 				IOUtils.copy(new ByteArrayInputStream(content), outputStream);
-				
-				// checks for --x--x--x flags
-				if((entry.getMode() & 0000111)>0)
-				{
-					outputFile.setExecutable(true);
-				}
 			}
 		}
 		finally
 		{
 			IOUtils.closeQuietly(outputStream);
+		}
+		
+		if(AndroidSdkTool.getDefaultOperatingSystem().equals("linux"))
+		{
+			// checks for --x--x--x flags
+			if((entry.getMode() & 0000111)>0)
+			{
+				// ugly hack, but don't think there is another way to do this
+				Process process = new ProcessBuilder("chmod", "+x", new File(outputDir, entry.getName()).getAbsolutePath()).start();
+				
+	            try
+	            {
+		            int exit = process.waitFor();
+		            
+		            if(exit!=0)
+		            {
+			            print(process.getInputStream());
+			            print(process.getErrorStream());
+		            }
+	            }
+	            catch (InterruptedException e)
+	            {
+		            // TODO Auto-generated catch block
+		            e.printStackTrace();
+	            }
+			}
+		}
+	}
+	
+	private static void print(InputStream pis)
+	{
+		StringBuffer buf = new StringBuffer();
+		BufferedReader is = new BufferedReader(new InputStreamReader(pis));
+		String line = "";
+		
+		try
+		{
+			while((line = is.readLine()) != null)
+			{
+				buf.append(line);
+				buf.append(System.getProperty("line.separator"));
+			}
+			
+			System.out.println(buf);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
 		}
 	}
 	
