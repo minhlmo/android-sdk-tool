@@ -96,7 +96,7 @@ public class Main
 			String sdkFile = tool.downloadSdk();
 			
 			// step 4: install SDK
-			tool.install(sdkFile, tool.getInstallDir(), true);
+			tool.install(sdkFile, tool.getInstallDir(), overwrite);
 		}
 
 		// platform
@@ -104,7 +104,7 @@ public class Main
 		{
 			String file = tool.downloadItem(platform, os);
 			
-			tool.install(file, tool.getInstallDir(platform), true);
+			tool.install(file, tool.getInstallDir(platform), overwrite);
 		}
 		
 		// add-on
@@ -112,8 +112,8 @@ public class Main
 		{
 			String file = tool.downloadItem(addOn, os);
 
-			tool.install(file, tool.getInstallDir(addOn), true);
-			tool.writeSourceProperties(addOn);
+			tool.install(file, tool.getInstallDir(addOn), overwrite);
+			tool.writeSourceProperties(tool.getInstallDir(addOn), addOn);
 		}
 		
 		// extra
@@ -121,10 +121,8 @@ public class Main
 		{
 			String file = tool.downloadItem(extra, os);
 
-			if(file!=null)
-			{
-				tool.install(file, tool.getInstallDir(extra), false);
-			}
+			tool.install(file, tool.getInstallDir(extra), overwrite);
+			tool.writeSourceProperties(tool.getInstallDir(extra), extra);
 		}
 		
 		// sample
@@ -148,7 +146,10 @@ public class Main
 		{
 			String file = tool.downloadItem(t, os);
 
-			tool.install(file, tool.getInstallDir(t), true);
+			// There is a seperate tools package in the repository; 
+			// when unzipping it under Linux the execute flags are not 
+			// maintained. The tools package in the base SDK should be enough 
+			tool.install(file, tool.getInstallDir(t), false);
 		}
 	}
 	

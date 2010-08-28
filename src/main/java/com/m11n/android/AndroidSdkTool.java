@@ -132,7 +132,7 @@ public class AndroidSdkTool
 		return null;
 	}
 
-	public boolean install(String fromFile, String toDir, boolean ignoreRoot)
+	public boolean install(String fromFile, String toDir, boolean overwrite)
 	{
 		try
         {
@@ -140,38 +140,45 @@ public class AndroidSdkTool
 			
 	        String root = null;
 	        
-	        if(verbose)
-	        {
-	        	logger.info("Installing " + fromFile + " to directory " + toDir);
-	        }
-	        
-	        if(fromFile.endsWith("zip"))
-	        {
-		        root = CompressUtil.unzip(new File(fromFile), tmp);
-	        }
-	        else if(fromFile.endsWith("tgz") || fromFile.endsWith("tar.gz"))
-	        {
-		        root = CompressUtil.untargz(new File(fromFile), tmp);
-	        }
+        	File to = new File(toDir);
+        	to.getParentFile().mkdirs();
 
-        	File to = null;
-
-        	if(ignoreRoot && root!=null)
-	        {
-	        	to = new File(toDir);
-	        	to.mkdir();
-	        }
-	        else
-	        {
-	        	to = new File(toDir + "/" + root);
-	        	to.mkdir();
-	        }
-        	
-        	FileUtils.copyDirectory(new File(root), to);
-	        
-        	if(verbose)
+        	if(!to.exists() || overwrite)
         	{
-    			logger.info(fromFile + " installed to " + to.getAbsolutePath());
+    	        if(verbose)
+    	        {
+    	        	logger.info("Installing " + fromFile + " to directory " + toDir);
+    	        }
+    	        
+    	        if(fromFile.endsWith("zip"))
+    	        {
+    		        root = CompressUtil.unzip(new File(fromFile), tmp);
+    	        }
+    	        else if(fromFile.endsWith("tgz") || fromFile.endsWith("tar.gz"))
+    	        {
+    		        root = CompressUtil.untargz(new File(fromFile), tmp);
+    	        }
+
+            	// WARN: doesn't preserve file modes
+            	//FileUtils.copyDirectory(new File(root), to);
+        		if(verbose)
+        		{
+                	if(new File(root).renameTo(to))
+                	{
+                		logger.info(root + " successfully moved to " + to.getAbsolutePath());
+                	}
+                	else
+                	{
+                		logger.info("Could not move " + root + " to " + to.getAbsolutePath());
+                	}
+        		}
+        	}
+        	else
+        	{
+        		if(verbose)
+        		{
+        			logger.info("Target exists: " + to.getAbsolutePath());
+        		}
         	}
 			
 	        return true;
@@ -184,14 +191,14 @@ public class AndroidSdkTool
         return false;
 	}
 	
-	public void writeSourceProperties(AddOn addOn)
+	public void writeSourceProperties(String dir, Item item)
 	{
-		File file = new File(getInstallDir(addOn) + File.separator + "source.properties");
+		File file = new File(dir + File.separator + "source.properties");
 		
 		try
         {
-			String platformVersion = apiLevelToVersion.get(addOn.getApiLevel())==null? "" : apiLevelToVersion.get(addOn.getApiLevel());
-			String pr = addOn.getRevision();
+			String platformVersion = apiLevelToVersion.get(item.getApiLevel())==null? "" : apiLevelToVersion.get(item.getApiLevel());
+			String pr = item.getRevision();
 			
 			if(pr.length()>1 && pr.startsWith("0"))
 			{
@@ -201,16 +208,28 @@ public class AndroidSdkTool
 			if(verbose)
 			{
 				logger.info("Writing source.properties: " + file.getAbsolutePath());
-				logger.info("API Level " + addOn.getApiLevel() + " maps to " + platformVersion);
+				logger.info("API Level " + item.getApiLevel() + " maps to " + platformVersion);
 			}
 			
 			StringBuffer buf = new StringBuffer();
 			
-		    buf.append("Pkg.Desc=" + addOn.getDescription() + "\n");
 		    buf.append("Pkg.UserSrc=false" + "\n"); // TODO: where does this come from?
+		    buf.append("Pkg.Desc=" + item.getDescription() + "\n");
+		    if(item.getDescriptionUrl()!=null) buf.append("Pkg.DescUrl=" + item.getDescriptionUrl().replaceAll("\\:", "\\\\\\:") + "\n");
 		    buf.append("Platform.Version=" + platformVersion + "\n");
 		    buf.append("Pkg.Revision=" + pr + "\n");
-		    buf.append("AndroidVersion.ApiLevel=" + addOn.getApiLevel() + "\n");
+		    buf.append("AndroidVersion.ApiLevel=" + item.getApiLevel() + "\n");
+
+		    logger.warn("[source.properties] Find out if the property 'Archive.Os' and 'Archive.Arch' are necessary!");
+		    // TODO: buf.append("Archive.Os=ANY" + "\n");
+		    // TODO: buf.append("Archive.Arch=ANY" + "\n");
+		    
+		    if(item instanceof Extra)
+		    {
+			    buf.append("Extra.Path=" + ((Extra)item).getPath() + "\n");
+			    // TODO: this covers only downloads from the main repository
+				buf.append("Pkg.SourceUrl=" + repositoryUrl.replaceAll("\\:", "\\\\\\:") + "repository.xml");
+		    }
 
 		    FileUtils.writeStringToFile(file, buf.toString());
         }
@@ -467,6 +486,10 @@ public class AndroidSdkTool
 				{
 					item.setDescriptionUrl(node.getTextContent());
 				}
+				else if(Item.PATH.equals(node.getNodeName())) 
+				{
+					item.setPath(node.getTextContent());
+				}
 				else if(Item.ARCHIVES.equals(node.getNodeName()))
 				{
 					item.setArchives(parseArchives(node));
@@ -715,7 +738,7 @@ public class AndroidSdkTool
 	
 	public String getInstallDir(Extra extra)
 	{
-		return getInstallDir() + File.separator;
+		return getInstallDir() + File.separator + extra.getPath();
 	}
 
 	public static String getDefaultOperatingSystem()

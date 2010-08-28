@@ -19,6 +19,7 @@ public class Item
     public static final String LIBS = NS + "libs";
     public static final String LICENSE = NS + "license";
     public static final String OBSOLETE = NS + "obsolete";
+    public static final String PATH = NS + "path";
 
 	private String name;
 	private String vendor;
@@ -29,6 +30,7 @@ public class Item
 	private String version;
 	private String description;
 	private String descriptionUrl;
+	private String path;
 	private License license;
 	private Boolean obsolete = false;
 	private List<Archive> archives = new ArrayList<Archive>();
@@ -163,4 +165,14 @@ public class Item
 	{
 		this.libs = libs;
 	}
+
+	public String getPath()
+    {
+    	return path;
+    }
+
+	public void setPath(String path)
+    {
+    	this.path = path;
+    }
 }

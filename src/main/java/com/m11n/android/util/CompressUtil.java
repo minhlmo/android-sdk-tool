@@ -112,13 +112,19 @@ public class CompressUtil
 
 			for(TarArchiveEntry entry=tis.getNextTarEntry(); entry!=null;)
 			{
-				unpackEntries(tis, entry, outputDir);
-				
-				if(first && entry.isDirectory())
+				if(entry.isDirectory())
 				{
-					root = outputDir + File.separator + entry.getName();
+					// works here, but is generally speaking a hack; we are assuming here that this is not a TAR bomb (no single root directory)
+					String d = outputDir + File.separator + entry.getName();
+					
+					if(new File(d).getParentFile().equals(outputDir))
+					{
+						root = d;
+					}
 				}
 
+				unpackEntries(tis, entry, outputDir);
+				
 				entry = tis.getNextTarEntry();
 			}
 		}
