@@ -159,6 +159,12 @@ public class CompressUtil
 			if(content.length>0)
 			{
 				IOUtils.copy(new ByteArrayInputStream(content), outputStream);
+				
+				// checks for --x--x--x flags
+				if((entry.getMode() & 0000111)>0)
+				{
+					outputFile.setExecutable(true);
+				}
 			}
 		}
 		finally

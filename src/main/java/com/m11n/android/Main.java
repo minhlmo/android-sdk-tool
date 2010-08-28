@@ -1,5 +1,8 @@
 package com.m11n.android;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.GnuParser;
@@ -49,6 +52,7 @@ public class Main
 		boolean overwrite = cmd.hasOption("rw");
 		boolean sdk = Boolean.valueOf(cmd.getOptionValue("sdk", "true")).booleanValue();
 		boolean verbose = cmd.hasOption("verbose");
+		boolean agree = cmd.hasOption("agree");
 		
 		// NOTE: only 86 supported
 		if(architecture==null && ("linux".equals(os) || "mac".equals(os)))
@@ -58,26 +62,43 @@ public class Main
 		
 		// TODO: check for valid parameters
 
-		AndroidSdkTool tool = new AndroidSdkTool(revision, os, architecture, rootDir, overwrite, verbose);
+		AndroidSdkTool tool = new AndroidSdkTool(revision, os, architecture, rootDir, overwrite, verbose, agree);
+		
+		// step 1: refresh and parse repository
+		Repository repository = tool.downloadRepository();
+		
+		logger.info("\n\n" + repository.getLicense().getText());
+		logger.info("\n\n");
+		
+		// step 2: EULA agreement
+		if(!agree)
+		{
+			logger.warn("Do you agree with the EULA? [y/N]");
+
+			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+			
+			String answer = in.readLine();
+			
+			if(answer!=null && ("yes".equals(answer.toLowerCase()) || "y".equals(answer.toLowerCase())))
+			{
+				logger.info("You agreed with the EULA!");
+			}
+			else
+			{
+				logger.error("You have to agree with the EULA!");
+				return;
+			}
+		}
 		
 		if(sdk)
 		{
-			// step 1: download the SDK
+			// step 3: download the SDK
 			String sdkFile = tool.downloadSdk();
 			
-			// step 2: install SDK
+			// step 4: install SDK
 			tool.install(sdkFile, tool.getInstallDir(), true);
 		}
 
-		// step 3: refresh and parse repository
-		Repository repository = tool.downloadRepository();
-		
-		if(verbose)
-		{
-			logger.info("\n\n" + repository.getLicense().getText());
-			logger.info("\n\n");
-		}
-		
 		// platform
 		for(Platform platform : repository.getPlatforms())
 		{
@@ -142,6 +163,7 @@ public class Main
 		options.addOption("sdk", false, "Download SDK (optional; default: true)");
 		options.addOption("rw", false, "Overwrite downloaded files/re-download (optional; default: false)");
 		options.addOption("verbose", false, "Additional information, more feedback (optional; default: false)");
+		options.addOption("agree", false, "Agree with EULA (optional; default: ask for agreement)");
 		options.addOption("help", false, "Help");
 		
 		return options;

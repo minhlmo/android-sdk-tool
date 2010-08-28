@@ -59,10 +59,11 @@ public class AndroidSdkTool
 	private String downloadDir;
 	private Boolean overwrite = true;
 	private Boolean verbose = true;
+	private Boolean agree = true;
 	private DocumentBuilder builder;
 	private Map<String, String> apiLevelToVersion = new HashMap<String, String>();
 
-	public AndroidSdkTool(String revision, String os, String architecture, String rootDir, boolean overwrite, boolean verbose)
+	public AndroidSdkTool(String revision, String os, String architecture, String rootDir, boolean overwrite, boolean verbose, boolean agree)
 	throws Exception
 	{
 		builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -73,6 +74,7 @@ public class AndroidSdkTool
 		this.rootDir = rootDir;
 		this.overwrite = overwrite;
 		this.verbose = verbose;
+		this.agree = agree;
 		
 		downloadDir = System.getProperty("java.io.tmpdir") + "/android.tmp/" + os + "/";
 
