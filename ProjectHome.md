@@ -1,0 +1,1 @@
+Command line utility to update the Android SDK in a headless environment
